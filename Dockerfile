@@ -7,4 +7,7 @@ RUN     apt-get update && \
         ln -sf /dev/stderr /var/log/apache2/error.log &&\
         sed -i 's/session.save_handler = files/session.save_handler = redis/g' /etc/php/7.0/apache2/php.ini &&\
         sed -i '/session.save_handler/a session.save_path = "tcp://redis"' /etc/php/7.0/apache2/php.ini
+COPY index.php /var/www/html/index.php
 
+ENTRYPOINT [ "/usr/sbin/apache2ctl", "-D", "FOREGROUND" ]
+EXPOSE        80
